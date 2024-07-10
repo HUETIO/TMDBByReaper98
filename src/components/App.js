@@ -33,10 +33,12 @@ class App extends Component{
 render (){
   return (
     <div className="App">
-      <h1>prueba</h1>
+      <h1> ↓ Hola Bienvenid@s ↓ </h1>
       <Nav/>
       <SearchArea handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
       <MovieList movies = {this.state.movies}/>
+      <h6> → Prueba echa por Diego Sepulveda H. By Reaper98 </h6>
+      
     </div>
   )
 }

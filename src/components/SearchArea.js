@@ -7,7 +7,7 @@ const SearchArea = (props) => {
             <section className="col s4 offset-s3">
                 <form action="" onSubmit={props.handleSubmit}> 
                     <div className="input-field">
-                        <input placeholder="search movie" type="text" onChange={props.handleChange}>
+                        <input placeholder="Ingresa el nombre de tu Pelicula Aquí" type="text" onChange={props.handleChange}>
                         </input>
                     </div>
                 </form>
