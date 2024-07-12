@@ -35,7 +35,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1> ↓ Hola Bienvenid@s ↓ </h1>
+      <h1> ↓ TMDB Bienvenid@s ↓ </h1>
       <Nav />
       <SearchArea handleSubmit={handleSubmit} handleChange={handleChange} />
       <MovieList movies={movies} />
