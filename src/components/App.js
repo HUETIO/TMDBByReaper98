@@ -35,6 +35,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <h1 className='banner'> prueba de estilos con el banner</h1>
       <h1> ↓ TMDB Bienvenid@s ↓ </h1>
       <Nav />
       <SearchArea handleSubmit={handleSubmit} handleChange={handleChange} />
