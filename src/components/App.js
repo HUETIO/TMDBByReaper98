@@ -54,7 +54,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1 className='banner'> prueba de estilos con el banner</h1>
+     
+     <nav SearchArea={<SearchArea handleSubmit={handleSubmit}handleChange={handleChange}/>}/>
       <h1> ↓ TMDB Bienvenid@s ↓ </h1>
       <SearchArea handleSubmit={handleSubmit} handleChange={handleChange} />
 
