@@ -82,3 +82,42 @@
   padding: 10px 20px;
   text-align: center;
 }
+
+.navbar {
+  background-color: aqua;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.navbar-container{
+  display: flex;
+  align-items: center;
+}
+
+.banner{
+}
+
+.input-field{
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.input-field input{
+  padding: 8px;
+  border: 1px, solid #ccc;
+  border-radius: 5px;
+  flex-grow: 1;
+}
+
+.input-field button {
+  padding: 8px,15px;
+  background-color: aqua;
+  color: #ccc;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+}
