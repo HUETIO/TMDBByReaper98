@@ -1,4 +1,5 @@
 import React from "react"; 
+import Styles from "animate.css"
 
 const Nav =() => {
     <Nav>

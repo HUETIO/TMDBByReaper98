@@ -12,14 +12,33 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [movies, setMovies] = useState([]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}`)
-      .then((data) => data.json())
-      .then((data) => {
-        console.log(data);
-        setMovies([...data.results]);
-      });
+
+    const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}`);
+    const data = await response.json();
+
+    // Obtén el total de páginas de la API (debes ver cómo se estructura la respuesta para encontrar el valor correcto)
+    const totalPages = data.total_pages || 1; // Valor por defecto 1 si no se encuentra
+
+    setMovies([...data.results]);
+    setTotalPages(totalPages);
+    setCurrentPage(1); // Empieza en la página 1
+  };
+
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   const handleChange = (e) => {
@@ -37,8 +56,17 @@ const App = () => {
     <div className="App">
       <h1 className='banner'> prueba de estilos con el banner</h1>
       <h1> ↓ TMDB Bienvenid@s ↓ </h1>
-      <Nav />
       <SearchArea handleSubmit={handleSubmit} handleChange={handleChange} />
+
+
+      <div className="pagination">
+        <button disabled={currentPage === 1} onClick={handlePrev}>Anterior</button>
+        <span>Página {currentPage} de {totalPages}</span>
+        <button disabled={currentPage === totalPages} onClick={handleNext}>Siguiente</button>
+      </div>
+      <MovieList movies={movies.slice((currentPage - 1) * 10, currentPage * 10)} />
+
+      
       <MovieList movies={movies} />
 
       <h1>slider prueba de css styles</h1>
