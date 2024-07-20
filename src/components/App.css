@@ -53,6 +53,9 @@
 
 
 .movie-poster {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
   width: 200px;
   height: 300px;
   object-fit: cover;
@@ -166,13 +169,6 @@
   border:none;
   font-size: 20px;
   cursor:pointer;
-
-}
-
-.movie-poster{
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
 
 }
 
