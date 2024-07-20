@@ -47,7 +47,7 @@
 }
 .movie-card img{
   max-width: 100%;
-  max-height: 200px;
+  max-height: 100%;
   object-fit: cover;
 }
 
