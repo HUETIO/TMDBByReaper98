@@ -109,6 +109,12 @@
 .banner{
 }
 
+.search-bar{
+  display: flex;
+  align-items: center;
+  padding-left:800px;
+}
+
 .input-field{
   display: flex;
   align-items: center;
@@ -123,11 +129,12 @@
 
 .input-field button {
   padding: 8px,15px;
-  background-color: aqua;
+  background-color: #007bff;
   color: #ccc;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .modal{
