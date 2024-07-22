@@ -17,6 +17,8 @@ const App = () => {
   const [currentPage, setCurrentPage] =useState(1);
   const [sliderImages,setSliderImages] = useState([]);
   const [value,setValue] =useState(0);
+  const [autoSlideInterval, setSliderInterval] =useState(null);
+
 
   useEffect(() =>{
 const shuffleArray =(array) =>{
@@ -48,25 +50,19 @@ if(movies.length>0){
     setTotalPages(totalPages);
     setCurrentPage(1); // Empieza en la página 1
   };
-
-
   const handleNext = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
-
   const handlePrev = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
-
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
   };
-
-
   return (
     <div className="App">
      
