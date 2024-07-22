@@ -5,73 +5,69 @@ import Nav from './Nav';
 import SearchArea from './SearchArea';
 import MovieList from './MovieList';
 import './App.css';
-import slider from 'react-slick/lib/slider';
 
 const App = () => {
-  
-  //declaracion de variables
   const apiKey = process.env.REACT_APP_API;
   const [searchTerm, setSearchTerm] = useState('');
   const [movies, setMovies] = useState([]);
-  const [totalPages,setTotalPages]=useState(1);
-  const [currentPage, setCurrentPage] =useState(1);
-  const [sliderImages,setSliderImages] = useState([]);
-  const [value,setValue] =useState(0);
-  const [autoSlideInterval, setSliderInterval] =useState(null);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sliderImages, setSliderImages] = useState([]);
+  const [value, setValue] = useState(0);
 
-//imagenes del tmdb con el slider
-  useEffect(() =>{
-const shuffleArray =(array) =>{
-  for(let i=array.length -1; i> 0; i--){
-    const j= Math.floor(Math.random()*(i+1));
-    [array[i],array[j]] =[array[j], array[i]];
-  }
-  return array;
-};
+  // Obtener películas populares al montar el componente
+  useEffect(() => {
+    const fetchPopularMovies = async () => {
+      const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`);
+      const data = await response.json();
+      setMovies(data.results);
+      setSliderImages(data.results.slice(0, 16)); // Obtén las primeras 5 imágenes para el slider
+    };
 
-if(movies.length>0){
-  const shuffleMovies = shuffleArray([...movies]);
-  setSliderImages(shuffleMovies.slice(0,5));
-}
+    fetchPopularMovies();
+  }, [apiKey]);
 
-  },[movies]);
-//cambiar las imagenes 
-
+  // Cambiar las imágenes del slider automáticamente
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setValue((prevValue) => (prevValue + 1) % sliderImages.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [sliderImages]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}`);
     const data = await response.json();
+    const totalPages = data.total_pages || 1;
 
-    // Obtén el total de páginas de la API (debes ver cómo se estructura la respuesta para encontrar el valor correcto)
-    const totalPages = data.total_pages || 1; // Valor por defecto 1 si no se encuentra
-
-    setMovies([...data.results]);
+    setMovies(data.results);
     setTotalPages(totalPages);
-    setCurrentPage(1); // Empieza en la página 1
+    setCurrentPage(1);
   };
+
   const handleNext = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
+
   const handlePrev = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
+
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
   };
+
   return (
     <div className="App">
-     
-     <nav SearchArea={<SearchArea handleSubmit={handleSubmit}handleChange={handleChange}/>}/>
-      <h1> ↓ TMDB Bienvenid@s ↓ </h1>
-      <SearchArea handleSubmit={handleSubmit} handleChange={handleChange} />
-
-
+      <Nav SearchArea={<SearchArea handleSubmit={handleSubmit} handleChange={handleChange} />} />
+      <h1>↓ TMDB Bienvenid@s ↓</h1>
+      
       <div className="pagination">
         <button disabled={currentPage === 1} onClick={handlePrev}>Anterior</button>
         <span>Página {currentPage} de {totalPages}</span>
@@ -79,32 +75,27 @@ if(movies.length>0){
       </div>
       <MovieList movies={movies.slice((currentPage - 1) * 10, currentPage * 10)} />
 
-      
-      <MovieList movies={movies} />
-
-      <h2>slider de imagenes de peliculas</h2>
-      <div className='slider-container'>
-        <div className='slider'>
-          <p>valor:{value}</p>
+      <h2>Slider de imágenes de películas</h2>
+      <div className="slider-container">
+        <div className="slider">
+          <p>Valor: {value}</p>
           <Slider
             value={value}
             onChange={setValue}
             min={0}
             max={sliderImages.length - 1}
-           />
+          />
         </div>
-        {sliderImages.length > 0&& (
+        {sliderImages.length > 0 && (
           <img
-          src={`https://image.tmdb.org/t/p/w500${sliderImages[value].poster_path}`}
-            alt='Slider'
-            className='slider-image' 
+            src={`https://image.tmdb.org/t/p/w500${sliderImages[value].poster_path}`}
+            alt="Slider"
+            className="slider-image"
           />
         )}
       </div>
 
-
-      
-      <h6> → Prueba echa por Diego Sepulveda H. By Reaper98 </h6>
+      <h6>→ Prueba hecha por Diego Sepulveda H. By Reaper98</h6>
     </div>
   );
 };
