@@ -19,7 +19,7 @@ const App = () => {
   const [value,setValue] =useState(0);
   const [autoSlideInterval, setSliderInterval] =useState(null);
 
-
+//imagenes del tmdb con el slider
   useEffect(() =>{
 const shuffleArray =(array) =>{
   for(let i=array.length -1; i> 0; i--){
@@ -35,6 +35,7 @@ if(movies.length>0){
 }
 
   },[movies]);
+//cambiar las imagenes 
 
 
   const handleSubmit = async (e) => {
@@ -95,7 +96,7 @@ if(movies.length>0){
         {sliderImages.length > 0&& (
           <img
           src={`https://image.tmdb.org/t/p/w500${sliderImages[value].poster_path}`}
-            alt='alider'
+            alt='Slider'
             className='slider-image' 
           />
         )}
