@@ -1,16 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Nav from './Nav';
 import SearchArea from './SearchArea';
 import MovieList from './MovieList';
 import './App.css';
+import slider from 'react-slick/lib/slider';
 
 const App = () => {
+  
+  //declaracion de variables
   const apiKey = process.env.REACT_APP_API;
-
   const [searchTerm, setSearchTerm] = useState('');
   const [movies, setMovies] = useState([]);
+  const [totalPages,setTotalPages]=useState(1);
+  const [currentPage, setCurrentPage] =useState(1);
+  const [sliderImages,setSliderImages] = useState([]);
+  const [value,setValue] =useState(0);
+
+  useEffect(() =>{
+const shuffleArray =(array) =>{
+  for(let i=array.length -1; i> 0; i--){
+    const j= Math.floor(Math.random()*(i+1));
+    [array[i],array[j]] =[array[j], array[i]];
+  }
+  return array;
+};
+
+if(movies.length>0){
+  const shuffleMovies = shuffleArray([...movies]);
+  setSliderImages(shuffleMovies.slice(0,5));
+}
+
+  },[movies]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,8 +49,6 @@ const App = () => {
     setCurrentPage(1); // Empieza en la página 1
   };
 
-  const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
 
   const handleNext = () => {
     if (currentPage < totalPages) {
@@ -45,12 +66,6 @@ const App = () => {
     setSearchTerm(e.target.value);
   };
 
-  const [value, setValue] = useState(0);
-  const images = [
-    'https://source.unsplash.com/1600x900/?nature,water',
-    'https://source.unsplash.com/1600x900/?nature,trees',
-    'https://source.unsplash.com/1600x900/?nature,mountains'
-  ];
 
   return (
     <div className="App">
@@ -70,20 +85,28 @@ const App = () => {
       
       <MovieList movies={movies} />
 
-      <h1>slider prueba de css styles</h1>
-      <div className="slider-container">
-        <div className="slider">
-          <p>Valor: {value}</p>
+      <h2>slider de imagenes de peliculas</h2>
+      <div className='slider-container'>
+        <div className='slider'>
+          <p>valor:{value}</p>
           <Slider
             value={value}
             onChange={setValue}
             min={0}
-            max={images.length - 1}
-          />
+            max={sliderImages.length - 1}
+           />
         </div>
-        <img src={images[value]} alt="Slider" className="slider-image" />
+        {sliderImages.length > 0&& (
+          <img
+          src={`https://image.tmdb.org/t/p/w500${sliderImages[value].poster_path}`}
+            alt='alider'
+            className='slider-image' 
+          />
+        )}
       </div>
 
+
+      
       <h6> → Prueba echa por Diego Sepulveda H. By Reaper98 </h6>
     </div>
   );
