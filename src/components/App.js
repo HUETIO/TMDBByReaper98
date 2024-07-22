@@ -15,13 +15,23 @@ const App = () => {
   const [sliderImages, setSliderImages] = useState([]);
   const [value, setValue] = useState(0);
 
+  // Función para mezclar un array
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
   // Obtener películas populares al montar el componente
   useEffect(() => {
     const fetchPopularMovies = async () => {
       const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`);
       const data = await response.json();
       setMovies(data.results);
-      setSliderImages(data.results.slice(0, 16)); // Obtén las primeras 5 imágenes para el slider
+      const shuffledMovies = shuffleArray([...data.results]);
+      setSliderImages(shuffledMovies.slice(0, 16)); // Obtén 16 imágenes aleatorias para el slider
     };
 
     fetchPopularMovies();
@@ -33,7 +43,7 @@ const App = () => {
       setValue((prevValue) => (prevValue + 1) % sliderImages.length);
     }, 2000);
     return () => clearInterval(interval);
-  }, [sliderImages]);
+  }, [sliderImages, movies]); // Ahora depende de sliderImages y movies
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,6 +55,9 @@ const App = () => {
     setMovies(data.results);
     setTotalPages(totalPages);
     setCurrentPage(1);
+    setValue(0); // Restablece el valor del slider
+    const shuffledMovies = shuffleArray([...data.results]);
+    setSliderImages(shuffledMovies.slice(0, 16)); // Actualiza sliderImages con 16 resultados aleatorios de la búsqueda
   };
 
   const handleNext = () => {
