@@ -80,11 +80,12 @@ const App = () => {
     <div className="App">
 
       <div>
-        <title>By Reaper98 - || TMDB</title>
+        <title>ABC - || TMDB</title>
         <meta name='description' content='encuentra las mejores peliculas del momento. tu fuente de informacion peliculas y series'/>
       </div>
+
       <Nav SearchArea={<SearchArea handleSubmit={handleSubmit} handleChange={handleChange} />} />
-      <h1>↓ TMDB Bienvenid@s ↓</h1>
+      <h1>↓ Bienvenid@s ↓</h1>
       
       <div className="pagination">
         <button disabled={currentPage === 1} onClick={handlePrev}>Anterior</button>

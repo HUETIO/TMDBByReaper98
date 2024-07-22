@@ -6,7 +6,7 @@ const Nav = ({ SearchArea }) => {
         <nav className="navbar">
             <div className="navbar-container">
 
-                <h4 className="banner"> TMDB || By Reaper98 </h4>
+                <h4 className="banner"> ABC || TMDB </h4>
                 <div className="search-bar">
                 {SearchArea}
 
